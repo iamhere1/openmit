@@ -65,6 +65,16 @@ make all DMLC_ENABLE_STD_THREAD=1 USE_HDFS=1 DMLC_USE_REGEX=1 USE_OPENMP=1 \
 #  && cp -r googletest/include/gtest $third_party_dir/include \
 #  && cp googlemock/gtest/libgtest* $third_party_dir/lib 
 
+cd $third_party_dir/liblbfgs
+sh autogen.sh \
+  && ./configure \
+  && make \
+  && rm -rf $third_party_dir/include/liblbfgs \
+  && cp -r include $third_party_dir/include/liblbfgs \
+  && cp lib/.libs/liblbfgs.a $third_party_dir/lib \
+  && cp lib/.libs/liblbfgs-1.10.so $third_party_dir/lib
+ 
+
 mkdir -p $third_party_dir/include/clapack
 cp -r $CLAPACK_HOME/INCLUDE/* $third_party_dir/include/clapack
 cp -r $CLAPACK_HOME/blas_LINUX.a $third_party_dir/lib/libblas.a

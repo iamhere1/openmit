@@ -31,6 +31,8 @@ cmake_bin=/data1/lantian/open_source/tool/cmake-3.9.2-Linux-x86_64/bin/cmake
 # step1: compile protobuf
 #sh ${wk_dir}/message/compile-pb.sh $wk_dir/test
 
+echo $JAVA_HOME
+
 # step2: build openmit by cmake
 if [ "X$is_all_build" == "X1" ] || [ ! -d $wk_dir/build ]; then
   echo "all build ..."
