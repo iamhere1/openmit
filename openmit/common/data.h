@@ -62,6 +62,7 @@ class DMatrix {
       CHECK(uri_items.size() > 0) << "path " << uri << " is empty!";
 
       for (auto i = 0u; i < uri_items.size(); ++i) {
+        LOG(INFO)<<"uri_items_index:" << i << "  partid:" << partid << "  npart:"<< npart << "  data_format:" <<  data_format << " url:" << uri_items[i];
         auto* dbi = dmlc::Parser<mit_uint>::Create(
           uri_items[i].c_str(), partid, npart, data_format.c_str());
         CHECK(dbi) << "dmlc::Parser is null";

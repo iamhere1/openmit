@@ -70,6 +70,7 @@ void Worker::Run() {
           LOG(INFO) << msg << epoch << "," << batch_count << "," << progress << ">";
         }
         const auto batch = block.Slice(i, end);
+        LOG(INFO) << "i:" << i << "  end:" << end << "  size:" << batch.size << " block.size:" << block.size;
         MiniBatch(batch, batch_metric);
         for (auto i = 0u; i < train_metric.size(); ++i) train_metric[i] += batch_metric[i];
         batch_count += 1;
@@ -334,6 +335,7 @@ void Worker::KeySetMF(const dmlc::RowBlock<mit_uint> & batch,
                       std::unordered_map<ps::Key, mit::mit_float> & rating_map) {
   CHECK_EQ(cli_param_.model, "mf");
   CHECK_EQ(cli_param_.data_format, "libsvm");
+   LOG(INFO) << "batch_size:" << batch.size;
   for (size_t row_id = 0; row_id < batch.size; row_id++) {
     mit_uint user_id = (mit_uint)batch.label[row_id];
     user_set.insert(user_id);
@@ -349,7 +351,7 @@ void Worker::KeySetMF(const dmlc::RowBlock<mit_uint> & batch,
         rating_map.insert(std::make_pair(new_key, rating));
       }
       if (cli_param_.debug) {
-        //LOG(INFO) << "(" << user_id << "," << item_id << "," << rating << ")";
+        LOG(INFO) << "(" << user_id << "," << item_id << "," << rating << ")";
         //LOG(INFO) << user_id << " " << item_id << " " << new_key << " " << DecodeFeature(new_key, cli_param_.nbit)<<" "<< DecodeField(new_key, cli_param_.nbit) << " " << rating_map[new_key];
       }
     }
